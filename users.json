@@ -1,0 +1,15 @@
+{
+    "accounts":[
+        {
+            "username": "kenneth",
+            "password": "hello",
+            "type": "admin"
+        },
+        {
+            "username": "kenu",
+            "password": "hi",
+            "type" : "employee"
+        }
+            
+    ]
+}
