@@ -16,30 +16,40 @@ def adminMenu():
     pass
 
 def viewVehiclesHere():
+    print("="*SPACING)
+    print("Vehicles here")
     pass
 
 def viewAllVehicles():
+    print("="*SPACING)
+    print("All Vehicles Parked here")
     pass
 
 def viewSalesToday():
+    print("="*SPACING)
+    print("Sales today")
     pass
 
 def viewLifetimeSales():
-    pass
-
-def logoutMessage():
+    print("="*SPACING)
+    print("Lifetime Sales")
     pass
 
 def main(userInput):
     if userInput == "1":
+        viewVehiclesHere()
         pass
     elif userInput == "2":
+        viewAllVehicles()
         pass
     elif userInput == "3":
+        viewSalesToday()
         pass
     elif userInput == "4":
+        viewLifetimeSales()
         pass
     elif userInput == "5":
+        template.logoutMessage()
         pass
     else:
-        print("System Message: User Input Invalid")
+        template.invalidInput()

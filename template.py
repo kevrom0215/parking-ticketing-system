@@ -30,3 +30,9 @@ def printMenu():
     print("2 - Exit")
     userInput = input("Enter input: ")
     return userInput
+
+def logoutMessage():
+    print("="*SPACING)
+    print("\t\tLOGGED OUT SUCCESSFULLY")
+    print("^"*SPACING)
+    pass

@@ -2,7 +2,7 @@ import os
 import json
 import time
 
-import admin, staff, template
+import admin, staff, template, middleware
 
 
 SALES_FILENAME = "sales.txt"
@@ -14,29 +14,6 @@ def startup():
     #     print("File already exists")
     pass
 
-
-def getUserCreds():
-    username = input("Enter username: ")
-    password = input("Enter password: ")
-    return username,password
-
-def authenticator(credentials):
-    """
-    This function authenticates with a return value depending
-    on the user level.
-        - returns 1 if admin
-        - returns 2 if staff
-        - returns 3 if not authenticated
-    """
-    #open user jsons
-    #compare username
-    #compare password
-    #return authenticate
-    return 1
-    pass
-
-
-
 ##############################################################
 template.printIntro()
 startup()
@@ -44,23 +21,24 @@ exiter = "1"
 while exiter!="2":
     exiter = template.printMenu()
     if exiter == "1":
-        creds = getUserCreds()
+        creds = ""
+        creds = middleware.getUserCreds()
         userInput = 1
-        authenticator = authenticator(creds)
-        if authenticator == 1:
-            os.system('cls')
+        auth = middleware.authenticator(creds)
+        if auth == 1:
+            #os.system('cls')
             while userInput!="5":
                 userInput = admin.adminMenu()
                 admin.main(userInput)
                 
             pass
-        elif authenticator == 2:
-            os.system('cls')
-            userInput = staff.staffMenu()
-            while userInput!=3:
-                pass
+        elif auth == 2:
+            #os.system('cls')
+            while userInput!="3":
+                userInput = staff.staffMenu()
+                staff.main(userInput)
             pass
-        elif authenticator == 3:
+        elif auth == 3:
             template.invalidUserPrint()
         else:
             template.errorPrinter()
