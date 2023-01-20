@@ -1,0 +1,14 @@
+{
+    "cars":[
+        {
+        "plate_number": "NBC 2711",
+        "vehicle_type": "2",
+        "time_in": "00:00:00"
+        },  
+        {
+        "plate_number": "AJA 281",
+        "vehicle_type": "2",
+        "time_in": "18:55:14"
+        }
+    ]
+}

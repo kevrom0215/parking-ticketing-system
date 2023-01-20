@@ -1,3 +1,1 @@
-PZI 331 - 2 - 19/01/2023 13:53:03
-NBC 2711 - 2 - 19/01/2023 14:38:15
-drhjftnyjthdr rytjdnkk - 1 - 19/01/2023 14:38:33
+{'plate_number': 'PVQ 373', 'vehicle_type': '2', 'time_in': '20/01/2023 12:58:39'}{'plate_number': 'PVQ 373', 'vehicle_type': '2', 'time_in': '20/01/2023 13:08:35'}{'plate_number': 'PVQ 373', 'vehicle_type': '2', 'time_in': '20/01/2023 13:14:25'}{'plate_number': 'PVQ373', 'vehicle_type': '2', 'time_in': '20/01/2023 13:16:44'}{'plate_number': 'PVQ373', 'vehicle_type': '2', 'time_in': '20/01/2023 18:34:01'}{'plate_number': 'AJA1327', 'vehicle_type': '2', 'time_in': '20/01/2023 18:34:18'}
