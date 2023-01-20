@@ -73,21 +73,22 @@ def computeHours(timeIn, timeOut):
     t2 = datetime.strptime(timeOut, "%H:%M:%S")
     hoursSpent = t2 - t1
     timeInSecs = hoursSpent.total_seconds()
+    hours = int(str(hoursSpent).split(":")[0])
+    minutes = int(str(hoursSpent).split(":")[1])
     print(f"\n\nTotal Hours: {hoursSpent}\n\n")
-    if int(timeInSecs) < 300:
-        print("Grace period")
-        return 0
-    elif int(timeInSecs) >  10800:
-        print(f"Total Hours: {hoursSpent}")
-        #TODO: compute amount to pay if timespent is more than 10800
-        amountToPay = 50 
-        
-        print(amountToPay)
-        return amountToPay
-    else:
-        return 50
     
-    pass
+    if hours < 3:
+        if minutes<15:
+            return 0
+        else:
+            return 50
+    else:
+          amountToPay = 50 + (hours-3)*10
+          if minutes > 30:
+              amountToPay += 10
+              return amountToPay
+          return amountToPay
+    
 
 def carExit():
     userInput = input("Enter car plate: ")
@@ -99,6 +100,7 @@ def carExit():
     while amountInput < amountToPay:
         print("Enter amount > parking fee")
     #TODO: delete from json
+    #TODO: add to sale
     print("System Message: PRINTING RECIEPT")
     print("\n\n\n")
     print("-"*SPACING)
