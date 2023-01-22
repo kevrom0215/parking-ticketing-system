@@ -6,16 +6,28 @@ SPACING = 60
 fileName = "parking"
 fileDay = datetime.now().strftime("%d-%m-%Y")
 file = f"{fileName}_{fileDay}.json"
+saleFile = "sales.json"
 
 def initialize():
     path = f"/{file}"
-    isExist = os.path.exists(path)
+    isExist = os.path.exists(file)
+    isExist1 = os.path.exists(saleFile)
     if isExist == False:
         try:
             f = open(file, 'x')
+            f.write("[]")
         except Exception as e:
             print(e)
-            print("Error creating file")
+            print("File already exists")
+    if isExist1 == False:
+        try:
+            f = open(saleFile, 'x')
+            f.write("[]")
+        except Exception as e:
+            print(e)
+            print("File already exists")
+        finally:
+            f.close()
 
 def staffMenu():
     print("#"*SPACING)
@@ -30,35 +42,43 @@ def staffMenu():
 
 def carEntry(plateNumber, vehicleType):
     try:
-        f = open(f"{file}", "a")
+        # f = open(f"{file}", "a")
+        # listObj = json.load(f)
+        listObj = []
+        with open(file) as fp:
+            listObj = json.load(fp)
         formattedTime = datetime.now().strftime("%H:%M:%S")
         carDict = {
             "plate_number": f"{plateNumber}",
             "vehicle_type": f"{vehicleType}",
             "time_in": f"{formattedTime}",
         }
-        json_object = json.dumps(carDict, indent=4)
-        with open(file, "a") as outfile:
-            outfile.write(json_object + ",")
+        listObj.append(carDict)
+        with open(file, 'w') as json_file:
+            json.dump(listObj, json_file, 
+                                indent=4,  
+                                separators=(',',': '))
         pass
     except Exception as e:
         print(e)
         print("System Message: Something went wrong!")
     finally:
-        f.close()  
+        fp.close() 
 
         
     pass
 
 def getTimeIn(userInput):
-    with open(file, 'r') as openfile:
+    try:
+        with open(file, 'r') as openfile:
         # Reading from json file
-        json_object = json.load(openfile)
-        
-    for i in json_object["cars"]:
-        if userInput == i["plate_number"]:
-            print("Plate match!")
-            return i["time_in"]
+            json_object = json.load(openfile)
+        for i in json_object:
+            if userInput == i["plate_number"]:
+                print("Plate match!")
+                return i["time_in"]
+    except:
+        return None
     pass
 
 def computeHours(timeIn, timeOut):
@@ -78,7 +98,7 @@ def computeHours(timeIn, timeOut):
     print(f"\n\nTotal Hours: {hoursSpent}\n\n")
     
     if hours < 3:
-        if minutes<15:
+        if minutes<5:
             return 0
         else:
             return 50
@@ -93,26 +113,30 @@ def computeHours(timeIn, timeOut):
 def carExit():
     userInput = input("Enter car plate: ")
     timeIn = getTimeIn(userInput)
-    timeOut = datetime.now().strftime("%H:%M:%S")
-    amountToPay = computeHours(timeIn, timeOut)
-    print(f"Amount to pay is: {amountToPay}")
-    amountInput = int(input("Enter amount: "))
-    while amountInput < amountToPay:
-        print("Enter amount > parking fee")
-    #TODO: delete from json
-    #TODO: add to sale
-    print("System Message: PRINTING RECIEPT")
-    print("\n\n\n")
-    print("-"*SPACING)
-    printReciept(userInput, timeIn, timeOut, amountInput, amountToPay)
-    print("-"*SPACING)
-    print("\n\n\n")
+    if timeIn != None:
+        timeOut = datetime.now().strftime("%H:%M:%S")
+        amountToPay = computeHours(timeIn, timeOut)
+        print(f"Amount to pay is: {amountToPay}")
+        if amountToPay != 0:
+            amountInput = int(input("Enter amount: "))
+            while amountInput < amountToPay:
+                print("Enter amount > parking fee")
+            addToSale(amountInput)
+            print("System Message: PRINTING RECIEPT")
+            print("\n\n\n")
+            print("-"*SPACING)
+            printReciept(userInput, timeIn, timeOut, amountInput, amountToPay)
+            print("-"*SPACING)
+            print("\n\n\n")
+    else:
+        print("System Message: Vehicle not found")
     print("$"*SPACING)
     print("System Message: End of Transaction")
     print("$"*SPACING)
     print("\n\n\n")
 
 def printReciept(carPlate, timeIn,timeOut, amountInput, amountToPay):
+    #write to file here
     print("&"*SPACING)
     print("&"*SPACING)
     print("\t\t\tReciept")
@@ -125,6 +149,64 @@ def printReciept(carPlate, timeIn,timeOut, amountInput, amountToPay):
     print("\n\n\t\t\tThank you")
     print("&"*SPACING)
     print("&"*SPACING)
+
+def addToSale(amount):
+    try:
+        # f = open(f"{file}", "a")
+        # listObj = json.load(f)
+        listObj = []
+        with open(saleFile) as fp:
+            listObj = json.load(fp)
+        
+        try:
+            
+            fileDateChecker()
+            dateDict = {
+                "date": f"{fileDay}",
+                "sale": f"{amount}"
+            }
+            listObj.append(dateDict)
+            with open(saleFile, 'w') as json_file:
+                json.dump(listObj, json_file, 
+                                indent=4,  
+                                separators=(',',': '))
+            print('System Message: Successfully written to the JSON file')
+        except Exception as e:
+            print("System Message: Something went wrong!")
+    except Exception as e:
+        print(e)
+        print("System Message: Something went wrong!")
+    finally:
+        fp.close() 
+    pass
+
+def fileDateChecker():
+    try:
+        listObj = []
+        with open(saleFile) as fp:
+            listObj = json.load(fp)
+        
+        for i in listObj:
+            if i["date"] == fileDay:
+                return True
+        #create key pair
+        dateDict = {
+            "date": f"{fileDay}",
+            "sale": "0"
+        }
+        listObj.append(dateDict)
+        with open(saleFile, 'w') as json_file:
+            json.dump(listObj, json_file, 
+                                indent=4,  
+                                separators=(',',': '))
+        return True
+
+    except Exception as e:
+        print(e)
+    finally:
+        fp.close()
+
+
 
 def main(userInput):
     initialize()
