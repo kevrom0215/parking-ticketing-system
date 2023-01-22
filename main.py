@@ -27,7 +27,7 @@ while exiter!="2":
         auth = middleware.authenticator(creds)
         if auth == 1:
             #os.system('cls')
-            while userInput!="4":
+            while userInput!="6":
                 userInput = admin.adminMenu()
                 admin.main(userInput)
                 

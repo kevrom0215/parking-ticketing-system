@@ -1,17 +1,37 @@
 [
     {
+        "plate_number": "NBC 2711",
+        "time_in": "00:00:00",
+        "time_out": "0"
+    },
+    {
+        "plate_number": "AJA 281",
+        "time_in": "18:55:14",
+        "time_out": "0"
+    },
+    {
         "plate_number": "PVQ 373",
-        "vehicle_type": "2",
-        "time_in": "01:29:04"
+        "time_in": "12:55:51",
+        "time_out": "21:02:50"
+    },
+    {
+        "plate_number": "TEC 866",
+        "time_in": "12:56:13",
+        "time_out": "20:54:07"
+    },
+    {
+        "plate_number": "KEN 021",
+        "time_in": "15:56:26",
+        "time_out": "21:15:19"
+    },
+    {
+        "plate_number": "KEN 021",
+        "time_in": "15:56:26",
+        "time_out": "21:15:56"
     },
     {
         "plate_number": "NBC 2711",
-        "vehicle_type": "2",
-        "time_in": "16:11:31"
-    },
-    {
-        "plate_number": "PVQ 373",
-        "vehicle_type": "2",
-        "time_in": "16:58:38"
+        "time_in": "21:17:29",
+        "time_out": "21:17:38"
     }
 ]

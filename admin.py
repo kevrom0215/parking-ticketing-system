@@ -1,8 +1,7 @@
 import template
 import json
-
+from user import user
 from datetime import datetime
-SPACING = 60
 SPACING = 60
 fileName = "parking"
 fileDay = datetime.now().strftime("%d-%m-%Y")
@@ -13,19 +12,35 @@ def adminMenu():
     print("^"*SPACING)
     print("\t\t\tADMIN")
     print("^"*SPACING)
-    print("1 - View All Recorded Vehicles")
-    print("2 - View Sales Today")
-    print("3 - View Lifetime Sales")
-    print("4 - Logout")
+    print("1 - View Vehicles Parked")
+    print("2 - View All Recorded Vehicles")
+    print("3 - View Sales Today")
+    print("4 - View Lifetime Sales")
+    print("5 - Add staff")
+    print("6 - Logout")
     userInput = input("Enter input: ")
     return userInput
     pass
     
-    
+def viewParked():
+    print("="*SPACING)
+    print("All Vehicles Parked here: ")
+    try:
+        carList = []
+        with open(file,'r') as fs:
+            carList = json.load(fs)
+        for i in carList:
+            if i["time_out"] == "0":
+                print(i)
+    except:
+        print(e)
+        print("System Message: Something went wrong!")
+    finally:
+        fs.close()
 
 def viewAllVehicles():
     print("="*SPACING)
-    print("All Vehicles Parked here: ")
+    print("All Recorded Vehicles: ")
     try:
         carList = []
         with open(file,'r') as fs:
@@ -74,18 +89,36 @@ def viewLifetimeSales():
     finally:
         fs.close()
 
+
+def createUser():
+    print("\n\nCreate a user: ")
+    firstName = input("Enter first name: ")
+    lastName = input("Enter last name: ")
+    username = input("Enter username: ")
+    age = input("Enter age: ")
+    password = input("Enter password: ")
+
+    obj = user(firstName,lastName,username,age,password)
+    print(obj.writeToFile())
+    
+
 def main(userInput):
     if userInput == "1":
+        viewParked()
+    elif userInput == "2":
         viewAllVehicles()
         pass
-    elif userInput == "2":
+    elif userInput == "3":
         viewSalesToday()
         pass
-    elif userInput == "3":
+    elif userInput == "4":
         viewLifetimeSales()
         pass
-    elif userInput == "4":
-        template.logoutMessage()
+    elif userInput == "5":
+        createUser()
         pass
+    elif userInput == "6":
+        template.logoutMessage()
+        
     else:
         template.invalidInput()

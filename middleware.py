@@ -21,7 +21,7 @@ def authenticator(credentials):
     try:
         f = open(CONFIG_PATH)
         data = json.load(f)
-        for i in data["accounts"]:
+        for i in data:
             if(credentials[0]==i["username"] and credentials[1]==i["password"]):
                 if i["type"]=="admin":
                     return 1

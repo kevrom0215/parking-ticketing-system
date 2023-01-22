@@ -1,15 +1,28 @@
-{
-    "accounts":[
-        {
-            "username": "kenneth",
-            "password": "hello",
-            "type": "admin"
-        },
-        {
-            "username": "kenu",
-            "password": "hi",
-            "type" : "staff"
-        }
-            
-    ]
-}
+[
+    {
+        "username": "kenneth",
+        "password": "hello",
+        "type": "admin"
+    },
+    {
+        "username": "kenu",
+        "password": "hi",
+        "type": "staff"
+    },
+    {
+        "first_name": "kenneth",
+        "last_name": "araga",
+        "username": "noob69",
+        "age": "24",
+        "password": "kenenth",
+        "type": "staff"
+    },
+    {
+        "first_name": "Kenneth",
+        "last_name": "Araga",
+        "username": "kenuit",
+        "age": "24",
+        "password": "kenneth",
+        "type": "staff"
+    }
+]

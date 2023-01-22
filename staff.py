@@ -40,7 +40,7 @@ def staffMenu():
     return userInput
     pass
 
-def carEntry(plateNumber, vehicleType):
+def carEntry(plateNumber):
     try:
         # f = open(f"{file}", "a")
         # listObj = json.load(f)
@@ -50,15 +50,15 @@ def carEntry(plateNumber, vehicleType):
         formattedTime = datetime.now().strftime("%H:%M:%S")
         carDict = {
             "plate_number": f"{plateNumber}",
-            "vehicle_type": f"{vehicleType}",
             "time_in": f"{formattedTime}",
+            "time_out": "0"
         }
         listObj.append(carDict)
         with open(file, 'w') as json_file:
             json.dump(listObj, json_file, 
                                 indent=4,  
                                 separators=(',',': '))
-        pass
+        
     except Exception as e:
         print(e)
         print("System Message: Something went wrong!")
@@ -74,8 +74,9 @@ def getTimeIn(userInput):
         # Reading from json file
             json_object = json.load(openfile)
         for i in json_object:
-            if userInput == i["plate_number"]:
+            if userInput == i["plate_number"] and i["time_out"]=="0":
                 print("Plate match!")
+                print(i["time_in"])
                 return i["time_in"]
     except:
         return None
@@ -116,6 +117,7 @@ def carExit():
     if timeIn != None:
         timeOut = datetime.now().strftime("%H:%M:%S")
         amountToPay = computeHours(timeIn, timeOut)
+        addTimeOut(userInput, timeIn, timeOut)
         print(f"Amount to pay is: {amountToPay}")
         if amountToPay != 0:
             amountInput = int(input("Enter amount: "))
@@ -126,6 +128,7 @@ def carExit():
             print("\n\n\n")
             print("-"*SPACING)
             printReciept(userInput, timeIn, timeOut, amountInput, amountToPay)
+            
             print("-"*SPACING)
             print("\n\n\n")
     else:
@@ -206,17 +209,44 @@ def fileDateChecker():
     finally:
         fp.close()
 
+def addTimeOut(plateNumber, timeIn, timeOut):
+    try:
+        carList = []
+        with open(file,'r') as fs:
+            carList = json.load(fs)
+
+        k = 0
+        for i in carList:
+            #TODO: add regex for plate number
+            if i["plate_number"] == plateNumber:
+                if i["time_out"] == "0":
+                    carList[k] = {
+                        "plate_number": f"{plateNumber}",
+                        "time_in": f"{timeIn}",
+                        "time_out":f"{timeOut}"
+                    }
+                    print(carList[k])
+                    fs = open(file, 'w')
+                    json.dump(carList,fs, indent=4,  
+                                separators=(',',': '))
+                else:
+                    k+=1
+            else:
+                k+=1
+        
+    except Exception as e:
+        print(e)
+        print("System Message: Something went wrong!")
+    finally:
+        fs.close()
+    pass
 
 
 def main(userInput):
     initialize()
     if userInput == "1":
         plateNumber = input("Enter car plate number: ")
-        print("\nVehicle Type:")
-        print("1 - Motorcycle")
-        print("2 - Car\n")
-        vehicleType = input("Enter vehicle type: ")
-        carEntry(plateNumber, vehicleType)
+        carEntry(plateNumber)
     elif userInput == "2":
         carExit()
         pass
