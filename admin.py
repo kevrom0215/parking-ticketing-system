@@ -1,5 +1,6 @@
 import template
 import json
+import os
 from user import user
 from datetime import datetime
 SPACING = 60
@@ -20,8 +21,30 @@ def adminMenu():
     print("6 - Logout")
     userInput = input("Enter input: ")
     return userInput
-    pass
-    
+
+
+def initialize():
+    path = f"/{file}"
+    isExist = os.path.exists(file)
+    isExist1 = os.path.exists(saleFile)
+    if isExist == False:
+        try:
+            f = open(file, 'x')
+            f.write("[]")
+        except Exception as e:
+            print(e)
+            print("File already exists")
+    if isExist1 == False:
+        try:
+            f = open(saleFile, 'x')
+            f.write("[]")
+        except Exception as e:
+            print(e)
+            print("File already exists")
+        finally:
+            f.close()
+
+
 def viewParked():
     print("="*SPACING)
     print("All Vehicles Parked here: ")
@@ -103,20 +126,21 @@ def createUser():
     
 
 def main(userInput):
+    initialize()
     if userInput == "1":
         viewParked()
     elif userInput == "2":
         viewAllVehicles()
-        pass
+        
     elif userInput == "3":
         viewSalesToday()
-        pass
+        
     elif userInput == "4":
         viewLifetimeSales()
-        pass
+        
     elif userInput == "5":
         createUser()
-        pass
+        
     elif userInput == "6":
         template.logoutMessage()
         
