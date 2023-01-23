@@ -24,5 +24,21 @@
         "age": "24",
         "password": "kenneth",
         "type": "staff"
+    },
+    {
+        "first_name": "Miggy",
+        "last_name": "Galang",
+        "username": "miggwy",
+        "age": "24",
+        "password": "iamcol",
+        "type": "staff"
+    },
+    {
+        "first_name": "Kenneth",
+        "last_name": "Araga",
+        "username": "noob15",
+        "age": "24",
+        "password": "hehe",
+        "type": "staff"
     }
 ]

@@ -1,5 +1,6 @@
 import os
 import json
+import re
 from datetime import datetime
 import template
 SPACING = 60
@@ -76,11 +77,10 @@ def getTimeIn(userInput):
         for i in json_object:
             if userInput == i["plate_number"] and i["time_out"]=="0":
                 print("Plate match!")
-                print(i["time_in"])
                 return i["time_in"]
     except:
         return None
-    pass
+    
 
 def computeHours(timeIn, timeOut):
     """
@@ -113,6 +113,10 @@ def computeHours(timeIn, timeOut):
 
 def carExit():
     userInput = input("Enter car plate: ")
+    regexPattern = "^[A-Z]{2,3} [0-9]{3,5}$"
+    checker = re.search(regexPattern,userInput)
+    if checker == None:
+        print("System Message: Invalid Plate Format")
     timeIn = getTimeIn(userInput)
     if timeIn != None:
         timeOut = datetime.now().strftime("%H:%M:%S")
@@ -217,7 +221,6 @@ def addTimeOut(plateNumber, timeIn, timeOut):
 
         k = 0
         for i in carList:
-            #TODO: add regex for plate number
             if i["plate_number"] == plateNumber:
                 if i["time_out"] == "0":
                     carList[k] = {
@@ -246,7 +249,12 @@ def main(userInput):
     initialize()
     if userInput == "1":
         plateNumber = input("Enter car plate number: ")
-        carEntry(plateNumber)
+        regexPattern = "^[A-Z]{2,3} [0-9]{3,5}$"
+        checker = re.search(regexPattern,plateNumber)
+        if checker == None:
+            print("System Message: Invalid Plate Format")
+        else:
+            carEntry(plateNumber)
     elif userInput == "2":
         carExit()
         pass
@@ -254,3 +262,6 @@ def main(userInput):
         template.logoutMessage()
     else:
         template.invalidInput()
+
+
+

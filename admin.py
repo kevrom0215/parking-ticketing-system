@@ -32,7 +32,7 @@ def viewParked():
         for i in carList:
             if i["time_out"] == "0":
                 print(i)
-    except:
+    except Exception as e:
         print(e)
         print("System Message: Something went wrong!")
     finally:

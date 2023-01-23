@@ -1,5 +1,6 @@
 import json
 file = "users.json"
+import re
 
 class user():
     def __init__(self, firstName, lastName, username, age, password):
@@ -11,9 +12,15 @@ class user():
 
     def printUserName(self):
         print("Hello user " + self.user_name)
+        return self.user_name
 
     def _getPassword(self):
         return self.password
+    
+    def validateUsername(self):
+        regexPattern = "^[a-z]{5,7}[0-9]{0,3}?$"
+        checker = re.search(regexPattern, self.user_name)
+        return checker
     
     def writeToFile(self):
         userDict = {
